@@ -20,10 +20,10 @@ export HTTP_PROXY="http://<username>:<password>@<proxy_server>:<proxy_port>"
 export HTTPS_PROXY="$HTTP_PROXY"
 ```
 
-## Proxy with SSL self-signed certificate
+## Proxy with SSL custom certificate
 
-Some proxy like **zscaler** use a SSL self-signed certificato to inspect request, which may cause npm/bower commands
-to fail.
+Some proxy like **zscaler** use a custom SSL certificate to inspect request, which may cause npm/bower commands to
+fail.
 
 To solve this problem, you can disable the `strict-ssl` option in both npm and bower.
 
@@ -39,7 +39,7 @@ variable, in the same way as `HTTP_PROXY`:
 ### Unix
 
 ```sh
-export NO_PROXT="127.0.0.1, localhost, <your_local_server_ip_or_hostname>"
+export NO_PROXY="127.0.0.1, localhost, <your_local_server_ip_or_hostname>"
 ```
 
 ### Bower
@@ -49,13 +49,9 @@ Add this line to the `.bowerrc` file:
 "strict-ssl": false
 ```
 
-## Npm
+### Npm
 
 Run this command in your project directory:
 ```sh
 npm set strict-ssl false
 ```
-
-# Limitations
-
-As for now, it seems there is an issue with the `gulp-imagemin` module, it will not install properly behind a proxy.

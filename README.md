@@ -1,26 +1,29 @@
-# Starter kit
+# Starter Kit
 
-[![Join the chat at https://gitter.im/thales-poles-ra/starter-kit](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/thales-poles-ra/starter-kit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Web project starter kit including modern (and stable) tools and workflow, best practices, base template and an
+exhaustive documentation.
 
-Web project starter kit including tooling, best practices and project seed.
+Built on experience with large web projects, with architecture choices aiming for a clean, no-brainer development
+experience.
 
-It is based on our experience in large web projects, with architecture choices
-aiming for a clean, no-brainer development experience even for beginner teams.
+Generated using the [angular-pro](https://github.com/angular-starter-kit/generator-angular-pro) Yeoman generator.
 
 # Getting started
 
 1. Install required tools `gulp` and `bower`:
-```
-npm install -g gulp bower
-```
+ ```
+ npm install -g gulp bower
+ ```
+
 2. Install project tools, go to project folder:
-```
-npm install
-```
+ ```
+ npm install
+ ```
+
 3. Launch development server:
-```
-gulp serve
-```
+ ```
+ gulp serve
+ ```
 
 # Project structure
 ```
@@ -29,26 +32,27 @@ sources/                project source code
 |- data/                other project data, will be copied as-is
 |- fonts/               project fonts
 |- images/              project images
-|- libraries/           bower dependencies
-|- main/                main module, for entry points and global style
-|  |- main.config.js    app configuration code
-|  |- main.constants.js app configuration constants
-|  |- main.module.js    main module definition
-|  |- main.run.js       app entry point
-|  |- main.wrappers.js  AngularJS module wrappers for external libraries
-|  +- main.less         style entry point
-|- modules/             project components and modules
+|- libraries/           Bower dependencies
+|- main/                app components
+|  |- main.config.ts    app configuration code
+|  |- main.constants.ts app configuration constants
+|  |- main.module.ts    app module definition
+|  |- main.routes.ts    app routes
+|  |- main.run.ts       app entry point
+|  |- main.wrappers.ts  AngularJS module wrappers for external libraries
+|  |- main.scss         style entry point
 |  |- helpers/          helper services
 |  |- screens/          application screens
 |  |- shell/            application shell
 |  |- ui-components/    shared UI components
 |  |- web-services/     web services
-|  +- ...               additional project modules
+|  +- ...               additional components
 |- translations/        translations files
 +- index.html           html entry point
 e2e/                    end-to-end tests
 dist/                   compiled version
-reports/                test and coverage reports + generated documentation
+typings/                TypeScript definitions
+reports/                test and coverage reports
 gulpfile.config.js      gulp tasks configuration
 ```
 
@@ -64,11 +68,20 @@ clean       | Delete temporary files and dist files.
 test        | Launch unit tests using karma and jasmine.
 test:auto   | Launch karma server and launch unit tests after each change in project files.
 protractor  | Launch e2e tests using protractor.
-docs        | Generate jsdoc documentation from sources.
+tsd         | Download and update all TypeScript definitions for Bower dependencies.
+
+When building the application, you can specify the target environment using the flag `--environment <name>`.
+
+The default build environment is `production`. See [this documentation](docs/build-environments.md) for more details
+about multiple build environments management.
+
+You can disable opening automatically your default browser when using the `serve` commands by using the flag
+`--skip-open`.
 
 # Coding guides
 
-- [JavaScript](docs/coding-guides/js.md)
+- [JavaScript](docs/coding-guides/javascript.md)
+- [TypeScript](docs/coding-guides/typescript.md)
 - [CSS](docs/coding-guides/css.md)
 - [HTML](docs/coding-guides/html.md)
 - [Unit tests](docs/coding-guides/unit-tests.md)
@@ -76,38 +89,36 @@ docs        | Generate jsdoc documentation from sources.
 
 # Additional documentation
 
+- [Build environments](docs/build-environments.md)
+- [i18n](docs/i18n.md)
 - [Proxy configuration](docs/proxy.md)
 - [All gulp tasks](docs/tasks.md)
 - [Updating dependencies](docs/updating.md)
 
-# Features
-
 #### Languages
 - [TypeScript](http://www.typescriptlang.org), JavaScript
-- [Less](http://lesscss.org), CSS
-- [Jade](http://jade-lang.com), HTML
+- [Sass](http://sass-lang.com/), CSS
 - [Gettext](https://angular-gettext.rocketeer.be) (for translations)
 
 #### Quality
 - [TSLint](https://github.com/palantir/tslint)
-- [JSHint](http://jshint.com)
-- [JSCS](http://jscs.info)
+- [HTMLHint](http://htmlhint.com)
 - Unit tests ([Jasmine](http://jasmine.github.io))
 - End-to-end tests ([Protractor](https://github.com/angular/protractor))
 
 #### Development
 - Automation with [gulp](http://gulpjs.com)
+- [Webpack](https://webpack.github.io) build
 - Development server with API proxy and live reload ([BrowserSync](http://www.browsersync.io))
-- [JSDoc](http://usejsdoc.org) generation with angular support
 
 #### Build
 - JS+CSS+HTML bundling and minification ([useref](https://github.com/jonkemp/gulp-useref), 
   [uglify](https://github.com/terinjokes/gulp-uglify), 
-  [minify-html](https://github.com/murphydanger/gulp-minify-html), 
-  [csso](https://github.com/ben-eb/gulp-csso)) 
+  [html-minify](https://github.com/bestander/html-minify-loader), 
+  [clean-css](https://www.npmjs.com/package/gulp-clean-css) 
 - CSS browser support ([autoprefixer](https://github.com/sindresorhus/gulp-autoprefixer))
 - Images optimization ([imagemin](https://github.com/sindresorhus/gulp-imagemin))
-- Automatic angular module annotation ([ngAnnotate](https://github.com/Kagami/gulp-ng-annotate))
+- Automatic angular module annotation ([ngAnnotate](https://www.npmjs.com/package/ng-annotate-loader))
 - Asset revisionning ([rev](https://github.com/sindresorhus/gulp-rev))
 
 #### Libraries
@@ -119,11 +130,32 @@ docs        | Generate jsdoc documentation from sources.
 - [Font Awesome](http://fortawesome.github.io/Font-Awesome)
 - [Lodash](https://lodash.com)
 
-# Roadmap
+# License
 
-See the [wiki](https://github.com/thales-poles-ra/starter-kit/wiki).
-
-# Credits
-
-This starter kit was initially based on a seed generated by the 
+This starter kit is based on tooling from the
 [gulp-angular](https://github.com/Swiip/generator-gulp-angular) Yeoman generator.
+Portions of project generator-gulp-angular are Copyright (c) 2014 Matthieu Lux & Mehdy Dara
+
+The MIT License (MIT)
+
+Copyright (c) 2015-2017 Thales Services SAS
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+

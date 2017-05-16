@@ -1,0 +1,11 @@
+{
+  "generator-angular-pro": {
+    "version": "2.2.3",
+    "props": {
+      "target": "web",
+      "ui": "bootstrap",
+      "appName": "Starter Kit",
+      "projectName": "starter-kit"
+    }
+  }
+}

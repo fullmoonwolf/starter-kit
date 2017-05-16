@@ -3,29 +3,26 @@
 var path = require('path');
 var gulp = require('gulp');
 var conf = require('../gulpfile.config');
-
-var browserSync = require('browser-sync');
-
-var $ = require('gulp-load-plugins')({
-  pattern: ['gulp-*', 'main-bower-files']
-});
-
 var wiredep = require('wiredep').stream;
 var _ = require('lodash');
-var mainFolder = path.join(conf.paths.src, conf.paths.main);
+var browserSync = require('browser-sync');
 
-gulp.task('styles', ['fonts'], function() {
-  var lessOptions = {
-    options: [
-      conf.paths.bower,
-      mainFolder,
-      conf.paths.src
-    ]
+var $ = require('gulp-load-plugins')();
+
+function buildStyles() {
+  var mainFolder = path.join(conf.paths.src, conf.paths.main);
+
+  var sassOptions = {
+    outputStyle: 'expanded',
+    precision: 10,
+    includePaths: conf.sassIncludePaths
   };
 
   var injectFiles = gulp.src([
-    path.join(conf.paths.src, '/modules/**/*.less'),
-  ], { read: false });
+    path.join(mainFolder, '/**/*.scss'),
+    path.join('!' + mainFolder, '/*.scss'),
+    path.join('!' + mainFolder, '/theme/*.scss')
+  ], {read: false});
 
   var injectOptions = {
     transform: function(filePath) {
@@ -38,14 +35,20 @@ gulp.task('styles', ['fonts'], function() {
     addRootSlash: false
   };
 
-  return gulp.src(path.join(mainFolder, 'main.less'))
+  return gulp.src(path.join(mainFolder, 'main.scss'))
     .pipe($.inject(injectFiles, injectOptions))
     .pipe(wiredep(_.extend({}, conf.wiredep)))
-    .pipe(gulp.dest(mainFolder))
     .pipe($.sourcemaps.init())
-    .pipe($.less(lessOptions)).on('error', conf.errorHandler('Less'))
+    .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest(path.join(conf.paths.tmp, '/css/')))
-    .pipe(browserSync.reload({ stream: true }));
+    .pipe(gulp.dest(path.join(conf.paths.tmp, '/css/')));
+}
+
+gulp.task('styles', function() {
+  return buildStyles();
+});
+
+gulp.task('styles:reload', ['styles'], function() {
+  return buildStyles().pipe(browserSync.stream());
 });

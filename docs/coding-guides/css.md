@@ -2,8 +2,8 @@
 
 ## Naming conventions
 
-- In the CSS world, everything should be named in `snake-case` (lowercase words separated with a `-`).
-- File names should always be in `snake-case`
+- In the CSS world, everything should be named in `kebab-case` (lowercase words separated with a `-`).
+- File names should always be in `kebab-case`
 
 ## Coding rules
 
@@ -33,23 +33,23 @@ And keep in mind this general rules:
 
 - Use object-oriented CSS (OOCSS):
   * Factorize common code in base class, and extend it, for example:
-	```less
-	// Base button class
-	.btn { ... }
-	
-	// Color variation
-	.btn-warning { ... }
-	
-	// Size variation
-	.btn-small { ... }
-	```
-  * Try to name class by function, not style nor semantics for better reusability:
+  ```scss
+  // Base button class
+  .btn { ... }
+  
+  // Color variation
+  .btn-warning { ... }
+  
+  // Size variation
+  .btn-small { ... }
+  ```
+  * Try to name class by semantic, not style nor function for better reusability:
     Use `.btn-warning`, not `btn-orange` nor `btn-cancel`
   * Avoid undoing style, refactor using common base classes and extensions
 
 - Keep your style scoped
   * Clearly separate **global** (think *framework*) and **modules** (*components*) style
-  * Global style should only go in `main/theme/*` or `main/helpers.less` (never in modules)
+  * Global style should only go in `main/theme/*` or `main/helpers.scss` (never in modules)
   * Avoid interactions between modules, if some style may need to be shared, refactor it as a framework component in
     put it in your global theme.
   * Avoid using wider selectors than needed (always use classes!)
@@ -58,7 +58,7 @@ And keep in mind this general rules:
   * The less, the better (no pun intented), factorize rules whenever it's possible
   * CSS is code, and like any code frequent refactoring is healthy
   
-- When ugly hacks cannot be avoided, put it in `main/hacks.less`:
+- When ugly hacks cannot be avoided, put it in `main/hacks.scss`:
   * These ugly hacks should only be **temporary**
   * Each hack should be documented with the author name, the problem and hack reason
   * Limit this file to a reasonable length (~100 lines) and refactor hacks with proper solutions when the limit is 
@@ -68,6 +68,6 @@ And keep in mind this general rules:
 
 - Never use the `!important` keyword. Ever.
 - Never use **inline** style in html, even *just for debugging* (because we KNOW it will end up in your commit)
-- Do not use browser-specific prefixes: there is tools taking care of that part 
+- Do not use browser-specific prefixes: there are tools taking care of that part 
   ([autoprefixer](https://github.com/postcss/autoprefixer))
 

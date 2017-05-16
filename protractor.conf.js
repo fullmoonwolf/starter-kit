@@ -1,7 +1,12 @@
 'use strict';
 
 var conf = require('./gulpfile.config');
-var HtmlReporter = require('protractor-html-screenshot-reporter');
+var SpecReporter = require('jasmine-spec-reporter').SpecReporter;
+var HtmlScreenshotReporter = require('protractor-jasmine2-screenshot-reporter');
+
+var reporter = new HtmlScreenshotReporter({
+  dest: 'reports/e2e/html'
+});
 
 // An example configuration file.
 exports.config = {
@@ -11,8 +16,13 @@ exports.config = {
 
   // Capabilities to be passed to the webdriver instance.
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': process.env.PROTRACTOR_BROWSER || 'chrome'
   },
+
+  framework: 'jasmine2',
+
+  // Only works with Chrome and Firefox
+  directConnect: true,
 
   baseUrl: 'http://localhost:3000',
 
@@ -24,15 +34,27 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    isVerbose: true, // log tests in console
-    realtimeFailure: true,
-    includeStackTrace: true
+    print: function() {}
   },
 
+  // Setup the report before any tests start
+  beforeLaunch: function() {
+    return new Promise(function(resolve){
+      reporter.beforeLaunch(resolve);
+    });
+  },
   onPrepare: function() {
-    // reporter in html with a screenshot for each test.
-    jasmine.getEnv().addReporter(new HtmlReporter({
-       baseDirectory: 'reports/e2e/html'
-    }));
+    // Add better console spec reporter
+    jasmine.getEnv().addReporter(new SpecReporter({}));
+
+    // Reporter in html with a screenshot for each test.
+    jasmine.getEnv().addReporter(reporter);
+  },
+
+  // Close the report after all tests finish
+  afterLaunch: function(exitCode) {
+    return new Promise(function(resolve){
+      reporter.afterLaunch(resolve.bind(this, exitCode));
+    });
   }
 };

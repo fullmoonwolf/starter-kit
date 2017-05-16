@@ -5,39 +5,31 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: en-US\n"
 
-# --------------------------------------------------
-# APP
-# --------------------------------------------------
-
-#. Application name. Do not translate.
-msgid "T_APP_NAME"
-msgstr "Starter Kit"
-
-#. Company name. Do not translate.
-msgid "T_APP_COMPANY"
-msgstr "Company"
-
-#. Home section
-msgid "T_HOME"
-msgstr "Home"
-
-#. About section
-msgid "T_ABOUT"
+#: app.ts.js:157
+#: modules/shell/shell.html:30
+msgid "About"
 msgstr "About"
 
-# --------------------------------------------------
-# Homepage
-# --------------------------------------------------
+#: app.ts.js:113
+#: modules/screens/about/about.html:7
+#: modules/shell/shell.html:17
+msgid "APP_NAME"
+msgstr "Starter Kit"
 
-#. Say hello to our users
-msgid "T_HELLO"
+#: modules/screens/home/home.html:7
+msgid "Hello world !"
 msgstr "Hello world !"
 
-# --------------------------------------------------
-# About
-# --------------------------------------------------
+#: app.ts.js:147
+#: modules/shell/shell.html:24
+msgid "Home"
+msgstr "Home"
 
-#. Application version
-msgid "T_VERSION"
+#: modules/shell/shell.html:9
+msgid "Toggle navigation"
+msgstr "Toggle navigation"
+
+#: modules/screens/about/about.html:10
+msgid "Version"
 msgstr "Version"
 
